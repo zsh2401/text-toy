@@ -1,10 +1,15 @@
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
-def generate_text(prompt_text, model_name='gpt2', max_length=50):
+model_name='gpt2'
+
+# 加载预训练模型及其分词器
+tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+model = GPT2LMHeadModel.from_pretrained(model_name)
+
+
+# print(model.parameters())
+def generate_text(prompt_text, max_length=50):
     
-    # 加载预训练模型及其分词器
-    tokenizer = GPT2Tokenizer.from_pretrained(model_name)
-    model = GPT2LMHeadModel.from_pretrained(model_name)
 
     # 编码输入文本，增加必要的格式标记
     encoded_input = tokenizer.encode(prompt_text, return_tensors='pt')
@@ -25,6 +30,11 @@ def generate_text(prompt_text, model_name='gpt2', max_length=50):
 
 
 
+print("Model is ready")
 while(True):
-    
-    print(generate_text(input()))
+    print("\n\n\n======")
+    prompt = input("Say something to our model>>>")
+    reply = generate_text(prompt)
+    print("\n\n=======Following is machine's reply=======")
+    print(reply)
+    print("==========================================")
